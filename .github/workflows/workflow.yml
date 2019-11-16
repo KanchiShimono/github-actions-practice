@@ -8,3 +8,10 @@ jobs:
       - uses: actions/checkout@master
       - name: Static analysis
         uses: ./.github/actions/lint
+  test:
+    name: Unit testing by pytest
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Unit test
+        uses: ./.github/actions/test
