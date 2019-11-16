@@ -1,0 +1,10 @@
+name: Main workflow
+on: [push]
+jobs:
+  lint:
+    name: Static analysis by flake8 and mypy
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Static analysis
+        uses: ./.github/actions/lint
