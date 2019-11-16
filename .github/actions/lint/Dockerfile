@@ -5,7 +5,7 @@ LABEL "com.github.actions.description"="Run static analysis"
 LABEL "com.github.actions.icon"="check-circle"
 LABEL "com.github.actions.color"="green"
 
-COPY "entrypoit.sh" "/entrypoint.sh"
+COPY "entrypoint.sh" "/entrypoint.sh"
 RUN chmod +x /entrypoint.sh
 
 RUN set -x; \
