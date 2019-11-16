@@ -12,4 +12,5 @@ RUN set -x; \
   pip install \
     pytest
 
+ENV PYTHONPATH=./python
 ENTRYPOINT ["/entrypoint.sh"]
