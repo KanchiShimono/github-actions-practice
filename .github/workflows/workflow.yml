@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
+      - name: Copy requirements.txt for docker container
+        run: |
+          cp ./requirements.txt ./.github/actions/lint/
       - name: Static analysis
         uses: ./.github/actions/lint
   test:
@@ -13,5 +16,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
+      - name: Copy requirements.txt for docker container
+        run: |
+          cp ./requirements.txt ./.github/actions/test/
       - name: Unit test
         uses: ./.github/actions/test
