@@ -1,4 +1,0 @@
-emoji
-flake8
-mypy
-pytest
