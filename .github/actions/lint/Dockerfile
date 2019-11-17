@@ -8,9 +8,10 @@ LABEL "com.github.actions.color"="green"
 COPY "entrypoint.sh" "/entrypoint.sh"
 RUN chmod +x /entrypoint.sh
 
+COPY "requirements.txt" "/requirements.txt"
 RUN set -x; \
-  pip install \
-    flake8 \
-    mypy
+  pip install --upgrade pip
+RUN set -x; \
+  pip install -r requirements.txt
 
 ENTRYPOINT ["/entrypoint.sh"]
