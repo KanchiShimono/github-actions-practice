@@ -8,10 +8,15 @@ LABEL "com.github.actions.color"="green"
 COPY "entrypoint.sh" "/entrypoint.sh"
 RUN chmod +x /entrypoint.sh
 
-COPY "requirements.txt" "/requirements.txt"
+COPY "Pipfile" "/Pipfile"
+COPY "Pipfile.lock" "/Pipfile.lock"
 RUN set -x; \
   pip install --upgrade pip
 RUN set -x; \
-  pip install -r requirements.txt
+  pip install pipenv
+RUN set -x; \
+  pipenv install --system --dev
+
+RUN rm Pipfile Pipfile.lock
 
 ENTRYPOINT ["/entrypoint.sh"]
