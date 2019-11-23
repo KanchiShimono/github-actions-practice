@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  python3:
+    build:
+      context: .
+      dockerfile: ./Docker/python/Dockerfile
+    image: github-action-practice-python3
+    volumes:
+      - ./python/hello_world:/app/hello_world
+    tty: true
