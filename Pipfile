@@ -9,4 +9,3 @@ mypy = "*"
 pytest = "*"
 
 [packages]
-emoji = "*"

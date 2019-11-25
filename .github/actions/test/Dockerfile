@@ -8,16 +8,23 @@ LABEL "com.github.actions.color"="green"
 COPY "entrypoint.sh" "/entrypoint.sh"
 RUN chmod +x /entrypoint.sh
 
-COPY "Pipfile" "/Pipfile"
-COPY "Pipfile.lock" "/Pipfile.lock"
+COPY "python" "/python/python"
+COPY "setup.py" "/python/setup.py"
+COPY "setup.cfg" "/python/setup.cfg"
+COPY "Pipfile" "/python/Pipfile"
+COPY "Pipfile.lock" "/python/Pipfile.lock"
 RUN set -x; \
   pip install --upgrade pip
 RUN set -x; \
   pip install pipenv
+
+WORKDIR /python
+RUN set -x; \
+  pip install .
 RUN set -x; \
   pipenv install --system --dev
 
-RUN rm Pipfile Pipfile.lock
+RUN rm -rf python setup.py setup.cfg Pipfile Pipfile.lock
 
-ENV PYTHONPATH=./python
+WORKDIR /
 ENTRYPOINT ["/entrypoint.sh"]
