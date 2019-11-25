@@ -17,8 +17,11 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
-      - name: Copy Pipfile for docker container
+      - name: Copy python package source to docker container
         run: |
+          cp -r ./python ./.github/actions/test/
+          cp ./setup.py ./.github/actions/test/
+          cp ./setup.cfg ./.github/actions/test/
           cp ./Pipfile ./.github/actions/test/
           cp ./Pipfile.lock ./.github/actions/test/
       - name: Unit test
