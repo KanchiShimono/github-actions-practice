@@ -1,5 +1,7 @@
 FROM python:3.7.5-stretch
 
+ARG WORK_DIR=/work
+
 LABEL "com.github.actions.name"="Check"
 LABEL "com.github.actions.description"="Run static analysis"
 LABEL "com.github.actions.icon"="check-circle"
@@ -8,8 +10,10 @@ LABEL "com.github.actions.color"="green"
 COPY "entrypoint.sh" "/entrypoint.sh"
 RUN chmod +x /entrypoint.sh
 
-COPY "Pipfile" "/Pipfile"
-COPY "Pipfile.lock" "/Pipfile.lock"
+COPY "python" "${WORK_DIR}/python"
+COPY "setup.py" "${WORK_DIR}/setup.py"
+COPY "setup.cfg" "${WORK_DIR}/setup.cfg"
+
 RUN set -x; \
   curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
   apt update && \
@@ -23,11 +27,11 @@ RUN set -x; \
 
 RUN set -x; \
   pip install --upgrade pip
-RUN set -x; \
-  pip install pipenv
-RUN set -x; \
-  pipenv install --system --dev
 
-RUN rm Pipfile Pipfile.lock
+WORKDIR ${WORK_DIR}
+RUN set -x; \
+  pip install '.[test]'
+
+RUN rm -rf ${WORK_DIR}
 
 ENTRYPOINT ["/entrypoint.sh"]

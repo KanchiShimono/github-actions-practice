@@ -8,8 +8,9 @@ jobs:
       - uses: actions/checkout@master
       - name: Copy Pipfile for docker container
         run: |
-          cp ./Pipfile ./.github/actions/lint/
-          cp ./Pipfile.lock ./.github/actions/lint/
+          cp -r ./python ./.github/actions/lint/
+          cp ./setup.py ./.github/actions/lint/
+          cp ./setup.cfg ./.github/actions/lint/
       - name: Static analysis
         uses: ./.github/actions/lint
   test:
@@ -22,7 +23,5 @@ jobs:
           cp -r ./python ./.github/actions/test/
           cp ./setup.py ./.github/actions/test/
           cp ./setup.cfg ./.github/actions/test/
-          cp ./Pipfile ./.github/actions/test/
-          cp ./Pipfile.lock ./.github/actions/test/
       - name: Unit test
         uses: ./.github/actions/test

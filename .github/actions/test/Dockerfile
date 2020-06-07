@@ -1,5 +1,7 @@
 FROM python:3.7.5-stretch
 
+ARG WORK_DIR=/work
+
 LABEL "com.github.actions.name"="Check"
 LABEL "com.github.actions.description"="Run unit tests"
 LABEL "com.github.actions.icon"="check-circle"
@@ -8,23 +10,17 @@ LABEL "com.github.actions.color"="green"
 COPY "entrypoint.sh" "/entrypoint.sh"
 RUN chmod +x /entrypoint.sh
 
-COPY "python" "/python/python"
-COPY "setup.py" "/python/setup.py"
-COPY "setup.cfg" "/python/setup.cfg"
-COPY "Pipfile" "/python/Pipfile"
-COPY "Pipfile.lock" "/python/Pipfile.lock"
+COPY "python" "${WORK_DIR}/python"
+COPY "setup.py" "${WORK_DIR}/setup.py"
+COPY "setup.cfg" "${WORK_DIR}/setup.cfg"
+
 RUN set -x; \
   pip install --upgrade pip
-RUN set -x; \
-  pip install pipenv
 
-WORKDIR /python
+WORKDIR ${WORK_DIR}
 RUN set -x; \
-  pip install .
-RUN set -x; \
-  pipenv install --system --dev
+  pip install '.[test]'
 
-RUN rm -rf python setup.py setup.cfg Pipfile Pipfile.lock
+RUN rm -rf ${WORK_DIR}
 
-WORKDIR /
 ENTRYPOINT ["/entrypoint.sh"]
