@@ -11,6 +11,17 @@ RUN chmod +x /entrypoint.sh
 COPY "Pipfile" "/Pipfile"
 COPY "Pipfile.lock" "/Pipfile.lock"
 RUN set -x; \
+  curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+  apt update && \
+  apt install -y --no-install-recommends \
+    nodejs \
+    npm && \
+  rm -rf /var/lib/apt/lists/*
+
+RUN set -x; \
+  npm install --global pyright
+
+RUN set -x; \
   pip install --upgrade pip
 RUN set -x; \
   pip install pipenv

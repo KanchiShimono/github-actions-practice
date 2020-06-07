@@ -2,7 +2,7 @@ name: Main workflow
 on: [push]
 jobs:
   lint:
-    name: Static analysis by flake8 and mypy
+    name: Static analysis by flake8, mypy and pyright
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
